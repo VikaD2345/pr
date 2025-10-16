@@ -1,56 +1,441 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    ... <!-- Скопируйте весь блок <head> из index.html -->
-    <title>Контакты — Название вашего сайта</title>
-    <meta name="description" content="Свяжитесь с нами: адрес, телефон, электронная почта и форма обратной связи">
+    <!-- Основные мета-теги для SEO и отзывчивости -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - Мир Книг</title>
+
+    <!-- Подключение внешних CSS библиотек -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Пользовательские стили для контактной страницы -->
+    <style>
+        /* Определение цветовых переменных */
+        :root {
+            --primary-color: #D4A574;        /* Песочный цвет */
+            --secondary-color: #B8956A;      /* Коричневый цвет */
+            --accent-color: #E67E22;         /* Оранжевый цвет */
+            --background-color: #FAF6F0;     /* Кремовый фон */
+            --text-color: #4A3728;           /* Темно-коричневый текст */
+        }
+
+        /* Основные стили страницы */
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Georgia', serif;   /* Шрифт с засечками */
+            padding-top: 76px;               /* Отступ для фиксированной навигации */
+        }
+
+        /* Стили навигационной панели */
+        .navbar {
+            background-color: var(--primary-color);
+        }
+
+        .navbar-brand, .nav-link {
+            color: var(--text-color) !important;
+        }
+
+        /* Базовые стили карточек */
+        .card {
+            border: none;                     /* Убираем стандартную границу */
+            border-radius: 15px;             /* Закругляем углы */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);  /* Добавляем тень */
+        }
+
+        /* Стили основных кнопок */
+        .btn-primary {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        /* Стили кнопки входа в навигации */
+        .btn-login {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: var(--background-color);
+        }
+
+        .btn-login:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+        }
+
+        /* Стили для карточек контактных методов */
+        .contact-card {
+            background-color: white;
+            transition: transform 0.3s ease; /* Плавная анимация при наведении */
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);     /* Эффект подъема при наведении */
+        }
+
+        /* Стили для иконок контактов */
+        .contact-icon {
+            color: var(--accent-color);
+            font-size: 2rem;
+        }
+
+        /* Стили для полей ввода в состоянии фокуса */
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
+        }
+
+        /* Стили модальных окон */
+        .modal-content {
+            border-radius: 15px;
+        }
+
+        .modal-header {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border-radius: 15px 15px 0 0;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        ... <!-- Скопируйте весь блок <header> из index.html -->
-    </header>
-    <main>
-        <!-- Хлебные крошки -->
-        <nav aria-label="Хлебные крошки">
-            <a href="index.html">Главная</a> →
-            <span>Контакты</span>
-        </nav>
+    <!-- Навигационная панель (идентична для всех страниц) -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <!-- Логотип и название -->
+            <a class="navbar-brand fw-bold" href="index.html"><i class="fas fa-book-open me-2"></i>Мир Книг</a>
 
-        <h1>Контакты</h1>
+            <!-- Кнопка для мобильного меню -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <section>
-            <h2>Наш адрес</h2>
-            <p>123456, г. Москва, ул. Примерная, д. 1</p>
-        </section>
+            <!-- Основное меню -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="books.html">Каталог книг</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="diary.html">Читательский дневник</a>
+                    </li>
+                    <!-- Активная страница - Контакты -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contacts.html">Контакты</a>
+                    </li>
 
-        <section>
-            <h2>Телефон</h2>
-            <p>+7 (999) 123-45-67</p>
-        </section>
+                    <!-- Кнопка входа в систему -->
+                    <li class="nav-item ms-2">
+                        <button class="btn btn-login btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fas fa-user me-1"></i>Войти
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-        <section>
-            <h2>Электронная почта</h2>
-            <p><a href="mailto:info@example.com">info@example.com</a></p>
-        </section>
+    <!-- Модальное окно входа -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Заголовок модального окна -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Вход в аккаунт</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
 
-        <section>
-            <h2>Форма обратной связи</h2>
-            <form action="#" method="post">
-                <label for="name">Ваше имя:</label><br>
-                <input type="text" id="name" name="name" required><br><br>
+                <!-- Тело модального окна с формой -->
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <!-- Поле для email -->
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
 
-                <label for="email">Ваш email:</label><br>
-                <input type="email" id="email" name="email" required><br><br>
+                        <!-- Поле для пароля -->
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
 
-                <label for="message">Сообщение:</label><br>
-                <textarea id="message" name="message" rows="5" required></textarea><br><br>
+                        <!-- Чекбокс запоминания -->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">
+                                Запомнить меня
+                            </label>
+                        </div>
+                    </form>
+                </div>
 
-                <button type="submit">Отправить</button>
-            </form>
-        </section>
-    </main>
-    <footer>
-        ... <!-- Скопируйте весь блок <footer> из index.html -->
-    </footer>
+                <!-- Футер с кнопками -->
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-between w-100">
+                        <!-- Переход к регистрации -->
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
+                            Зарегистрироваться
+                        </button>
+                        <button type="button" class="btn btn-primary">Войти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно регистрации -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Заголовок регистрации -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Регистрация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+
+                <!-- Форма регистрации -->
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <!-- Поле имени -->
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Имя</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                        </div>
+
+                        <!-- Поле email -->
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+
+                        <!-- Поле пароля -->
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+
+                        <!-- Подтверждение пароля -->
+                        <div class="mb-3">
+                            <label for="registerPasswordConfirm" class="form-label">Подтвердите пароль</label>
+                            <input type="password" class="form-control" id="registerPasswordConfirm" required>
+                        </div>
+
+                        <!-- Согласие с условиями -->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                            <label class="form-check-label" for="agreeTerms">
+                                Я согласен с условиями использования
+                            </label>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Футер с кнопками -->
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-between w-100">
+                        <!-- Переход к входу -->
+                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            Уже есть аккаунт?
+                        </button>
+                        <button type="button" class="btn btn-primary">Зарегистрироваться</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Заголовочная секция страницы контактов -->
+    <section class="py-5" style="background-color: white;">
+        <div class="container text-center">
+            <h1 class="display-5 fw-bold mb-4">Свяжитесь с нами</h1>
+            <p class="lead">Мы всегда готовы помочь вам найти идеальную книгу и ответить на ваши вопросы</p>
+        </div>
+    </section>
+
+    <!-- Секция способов связи -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4 mb-5">
+                <!-- Карточка телефонной связи -->
+                <div class="col-md-4">
+                    <div class="contact-card card p-4 text-center">
+                        <i class="fas fa-phone contact-icon mb-3"></i>
+                        <h5>Позвоните нам</h5>
+                        <p class="text-muted">Звоните в рабочие дни с 9:00 до 20:00</p>
+                        <!-- Ссылка для набора номера -->
+                        <a href="tel:+74951234567" class="btn btn-outline-primary">+7 (495) 123-45-67</a>
+                    </div>
+                </div>
+
+                <!-- Карточка email связи -->
+                <div class="col-md-4">
+                    <div class="contact-card card p-4 text-center">
+                        <i class="fas fa-envelope contact-icon mb-3"></i>
+                        <h5>Напишите нам</h5>
+                        <p class="text-muted">Отправьте email, мы ответим в течение 2 часов</p>
+                        <!-- Ссылка для отправки email -->
+                        <a href="mailto:info@mirknig.ru" class="btn btn-outline-primary">info@mirknig.ru</a>
+                    </div>
+                </div>
+
+                <!-- Карточка физического адреса -->
+                <div class="col-md-4">
+                    <div class="contact-card card p-4 text-center">
+                        <i class="fas fa-map-marker-alt contact-icon mb-3"></i>
+                        <h5>Приезжайте к нам</h5>
+                        <p class="text-muted">Посетите наш магазин для личной консультации</p>
+                        <button class="btn btn-outline-primary">г. Москва, ул. Тверская, 15</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция с формой обратной связи -->
+    <section class="py-5" style="background-color: white;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <!-- Карточка с формой -->
+                    <div class="card p-5">
+                        <h3 class="text-center mb-4">Форма обратной связи</h3>
+                        <p class="text-center text-muted mb-4">Заполните форму ниже, и мы свяжемся с вами в ближайшее время для помощи в выборе книг</p>
+
+                        <!-- Контактная форма -->
+                        <form>
+                            <div class="row g-3">
+                                <!-- Поле имени -->
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label">Ваше имя *</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+
+                                <!-- Поле телефона -->
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Телефон *</label>
+                                    <input type="tel" class="form-control" id="phone" required>
+                                </div>
+
+                                <!-- Поле email -->
+                                <div class="col-12">
+                                    <label for="email" class="form-label">Email *</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+
+                                <!-- Выпадающий список интересов -->
+                                <div class="col-12">
+                                    <label for="interest" class="form-label">Что вас интересует?</label>
+                                    <select class="form-control" id="interest">
+                                        <option>Художественная литература</option>
+                                        <option>Детективы и триллеры</option>
+                                        <option>Фантастика</option>
+                                        <option>Психология и саморазвитие</option>
+                                        <option>Биографии</option>
+                                        <option>Бизнес-литература</option>
+                                        <option>Детская литература</option>
+                                        <option>Учебная литература</option>
+                                        <option>Другое</option>
+                                    </select>
+                                </div>
+
+                                <!-- Поле сообщения -->
+                                <div class="col-12">
+                                    <label for="message" class="form-label">Сообщение</label>
+                                    <textarea class="form-control" id="message" rows="4" placeholder="Расскажите, какие книги вы ищете или какие вопросы у вас есть..."></textarea>
+                                </div>
+
+                                <!-- Чекбокс согласия на обработку данных -->
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="consent" required>
+                                        <label class="form-check-label" for="consent">
+                                            Я согласен(а) на обработку персональных данных *
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Кнопка отправки -->
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">Отправить сообщение</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция с информацией о местоположении и часах работы -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Колонка с информацией о местоположении -->
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h4 class="mb-3"><i class="fas fa-map-marker-alt me-2"></i>Как нас найти</h4>
+                        <p><strong>Адрес:</strong> г. Москва, ул. Тверская, 15</p>
+
+                        <!-- Информация о станциях метро -->
+                        <h6>Ближайшие станции метро:</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-subway me-2"></i>Станция "Охотный ряд" - 2 минуты пешком</li>
+                            <li><i class="fas fa-subway me-2"></i>Станция "Театральная" - 5 минут пешком</li>
+                            <li><i class="fas fa-subway me-2"></i>Станция "Площадь Революции" - 7 минут пешком</li>
+                        </ul>
+
+                        <!-- Информация о парковке -->
+                        <p><i class="fas fa-car me-2"></i>Платная парковка рядом с магазином</p>
+                    </div>
+                </div>
+
+                <!-- Колонка с информацией о времени работы -->
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h4 class="mb-3"><i class="fas fa-clock me-2"></i>Время работы</h4>
+
+                        <div class="row">
+                            <!-- Часы работы магазина -->
+                            <div class="col-6">
+                                <h6>Книжный магазин:</h6>
+                                <ul class="list-unstyled">
+                                    <li>Пн-Пт: 9:00 - 20:00</li>
+                                    <li>Сб-Вс: 10:00 - 18:00</li>
+                                </ul>
+                            </div>
+
+                            <!-- Часы работы онлайн поддержки -->
+                            <div class="col-6">
+                                <h6>Онлайн поддержка:</h6>
+                                <ul class="list-unstyled">
+                                    <li>Пн-Пт: 9:00 - 18:00</li>
+                                    <li>Сб: 10:00 - 16:00</li>
+                                    <li>Вс: выходной</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Информация о доставке -->
+                        <div class="alert" style="background-color: var(--primary-color); border: none; color: var(--text-color);">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Доставка книг по Москве:</strong> ежедневно с 10:00 до 22:00
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подключение JavaScript библиотеки Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

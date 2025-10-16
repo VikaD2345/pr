@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Мета-теги для правильного отображения страницы -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мир Книг - Ваш уютный книжный магазин</title>
+
+    <!-- Подключение Bootstrap CSS для адаптивной верстки -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Подключение Font Awesome для иконок -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Пользовательские стили -->
+    <style>
+        /* Определение цветовых переменных для единообразного дизайна */
+        :root {
+            --primary-color: #D4A574;        /* Основной песочный цвет */
+            --secondary-color: #B8956A;      /* Вторичный теплый коричневый */
+            --accent-color: #E67E22;         /* Акцентный теплый оранжевый */
+            --background-color: #FAF6F0;     /* Кремовый цвет фона */
+            --text-color: #4A3728;           /* Темно-коричневый цвет текста */
+        }
+
+        /* Основные стили для тела страницы */
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Georgia', serif;    /* Элегантный шрифт с засечками */
+        }
+
+        /* Стили для навигационной панели */
+        .navbar {
+            background-color: var(--primary-color);
+        }
+
+        /* Стили для элементов навигации */
+        .navbar-brand, .nav-link {
+            color: var(--text-color) !important;
+        }
+
+        /* Стили для основных кнопок */
+        .btn-primary {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        /* Эффект наведения для основных кнопок */
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        /* Стили для кнопки входа в навигации */
+        .btn-login {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: var(--background-color);
+        }
+
+        /* Эффект наведения для кнопки входа */
+        .btn-login:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+        }
+
+        /* Стили для главной героической секции с фоновым изображением */
+        .hero-section {
+            background: linear-gradient(rgba(212, 165, 116, 0.8), rgba(184, 149, 106, 0.8)), 
+                        url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+        }
+
+        /* Стили для карточек контента */
+        .card {
+            border: none;
+            border-radius: 15px;              /* Закругленные углы */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);  /* Мягкая тень */
+            transition: transform 0.3s ease;  /* Плавная анимация */
+        }
+
+        /* Эффект подъема при наведении на карточку */
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Стили для заголовков карточек */
+        .card-header {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border-radius: 15px 15px 0 0 !important;
+        }
+
+        /* Стили для карточек отзывов */
+        .testimonial-card {
+            background-color: white;
+            border-left: 4px solid var(--accent-color);  /* Цветная левая граница */
+        }
+
+        /* Стили для подвала сайта */
+        .footer {
+            background-color: var(--secondary-color);
+            color: var(--background-color);
+        }
+
+        /* Стили для модальных окон */
+        .modal-content {
+            border-radius: 15px;
+        }
+
+        /* Стили для заголовков модальных окон */
+        .modal-header {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border-radius: 15px 15px 0 0;
+        }
+
+        /* Стили для полей ввода в фокусе */
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <!-- Логотип и название магазина -->
+            <a class="navbar-brand fw-bold" href="#"><i class="fas fa-book-open me-2"></i>Мир Книг</a>
+
+            <!-- Кнопка для мобильного меню -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Навигационное меню -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Пункты меню -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="books.html">Каталог книг</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="diary.html">Читательский дневник</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacts.html">Контакты</a>
+                    </li>
+
+                    <!-- Кнопка входа в систему -->
+                    <li class="nav-item ms-2">
+                        <button class="btn btn-login btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fas fa-user me-1"></i>Войти
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Модальное окно входа в систему -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Заголовок модального окна -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Вход в аккаунт</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+
+                <!-- Содержимое модального окна - форма входа -->
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <!-- Поле для ввода email -->
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+
+                        <!-- Поле для ввода пароля -->
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+
+                        <!-- Чекбокс "Запомнить меня" -->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">
+                                Запомнить меня
+                            </label>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Нижняя часть модального окна с кнопками -->
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-between w-100">
+                        <!-- Кнопка перехода к регистрации -->
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
+                            Зарегистрироваться
+                        </button>
+                        <!-- Кнопка входа -->
+                        <button type="button" class="btn btn-primary">Войти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно регистрации -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Заголовок модального окна регистрации -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Регистрация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+
+                <!-- Форма регистрации -->
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <!-- Поле для ввода имени -->
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Имя</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                        </div>
+
+                        <!-- Поле для ввода email -->
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+
+                        <!-- Поле для ввода пароля -->
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+
+                        <!-- Поле для подтверждения пароля -->
+                        <div class="mb-3">
+                            <label for="registerPasswordConfirm" class="form-label">Подтвердите пароль</label>
+                            <input type="password" class="form-control" id="registerPasswordConfirm" required>
+                        </div>
+
+                        <!-- Чекбокс согласия с условиями -->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                            <label class="form-check-label" for="agreeTerms">
+                                Я согласен с условиями использования
+                            </label>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Нижняя часть с кнопками -->
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-between w-100">
+                        <!-- Кнопка перехода к входу -->
+                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            Уже есть аккаунт?
+                        </button>
+                        <!-- Кнопка регистрации -->
+                        <button type="button" class="btn btn-primary">Зарегистрироваться</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Главная героическая секция -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <!-- Основной заголовок страницы -->
+            <h1 class="display-4 fw-bold mb-4">Откройте мир литературы вместе с нами</h1>
+
+            <!-- Подзаголовок с описанием -->
+            <p class="lead mb-5">Тысячи книг для души и разума в нашем уютном книжном магазине</p>
+
+            <!-- Кнопка призыва к действию -->
+            <a href="books.html" class="btn btn-primary btn-lg px-5">Выбрать книгу</a>
+        </div>
+    </section>
+
+    <!-- Секция популярных категорий -->
+    <section class="py-5">
+        <div class="container">
+            <!-- Заголовок секции -->
+            <h2 class="text-center mb-5 fw-bold">Популярные категории</h2>
+
+            <!-- Сетка карточек категорий -->
+            <div class="row g-4">
+                <!-- Карточка художественной литературы -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-heart fa-3x text-danger mb-3"></i>
+                            <h5 class="card-title">Художественная литература</h5>
+                            <p class="card-text">Классические и современные произведения, которые тронут вашу душу</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка детективов -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-search fa-3x text-warning mb-3"></i>
+                            <h5 class="card-title">Детективы и триллеры</h5>
+                            <p class="card-text">Захватывающие истории, которые не дадут вам оторваться от чтения</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка фантастики -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-rocket fa-3x text-info mb-3"></i>
+                            <h5 class="card-title">Фантастика</h5>
+                            <p class="card-text">Путешествия в другие миры и встречи с невероятными приключениями</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция рекомендуемых книг -->
+    <section class="py-5" style="background-color: white;">
+        <div class="container">
+            <!-- Заголовок секции -->
+            <h2 class="text-center mb-5 fw-bold">Рекомендуемые книги</h2>
+
+            <!-- Сетка карточек книг -->
+            <div class="row g-4">
+                <!-- Карточка "Война и мир" -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h5 class="mb-0">Война и мир</h5>
+                            <small>Лев Толстой</small>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Классическая русская литература о любви, войне и поиске смысла жизни</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка "Дюна" -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h5 class="mb-0">Дюна</h5>
+                            <small>Фрэнк Герберт</small>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Эпическая космическая сага о власти, экологии и человеческой природе</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка "Стив Джобс" -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h5 class="mb-0">Стив Джобс</h5>
+                            <small>Уолтер Айзексон</small>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Захватывающая история жизни создателя Apple</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция отзывов клиентов -->
+    <section class="py-5">
+        <div class="container">
+            <!-- Заголовок секции отзывов -->
+            <h2 class="text-center mb-5 fw-bold">Отзывы наших читателей</h2>
+
+            <!-- Сетка карточек отзывов -->
+            <div class="row g-4">
+                <!-- Первый отзыв -->
+                <div class="col-md-4">
+                    <div class="testimonial-card card p-4">
+                        <p class="mb-3">"Нашел здесь редкие издания классики по отличным ценам. Консультанты очень знающие!"</p>
+                        <div class="text-end">
+                            <strong>— Книголюб</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Второй отзыв -->
+                <div class="col-md-4">
+                    <div class="testimonial-card card p-4">
+                        <p class="mb-3">"Отличный выбор детской литературы. Мой ребенок теперь читает с удовольствием!"</p>
+                        <div class="text-end">
+                            <strong>— Мама двоих детей</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Третий отзыв -->
+                <div class="col-md-4">
+                    <div class="testimonial-card card p-4">
+                        <p class="mb-3">"Уютная атмосфера и качественные книги. Стал постоянным клиентом!"</p>
+                        <div class="text-end">
+                            <strong>— Преподаватель литературы</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал сайта -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Левая колонка - информация о магазине -->
+                <div class="col-md-6">
+                    <h5><i class="fas fa-book-open me-2"></i>Мир Книг</h5>
+                    <p>Ваш уютный книжный магазин в самом центре города</p>
+                </div>
+
+                <!-- Правая колонка - контактная информация -->
+                <div class="col-md-6 text-end">
+                    <h5>Контакты</h5>
+                    <p><i class="fas fa-phone me-2"></i>+7 (495) 123-45-67</p>
+                    <p><i class="fas fa-envelope me-2"></i>info@mirknig.ru</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Подключение JavaScript Bootstrap для интерактивности -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
