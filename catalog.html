@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Каталог книг BookStore - полный выбор с фильтрацией по жанрам, цене и рейтингу.">
+    <meta name="theme-color" content="#b8860b">
+    <title>Каталог книг - BookStore</title>
+    <style>
+        /* ===== ЕДИНАЯ ЦВЕТОВАЯ ПАЛИТРА ===== */
+        :root {
+            --color-primary: #b8860b;
+            --color-primary-dark: #8b6508;
+            --color-primary-light: #daa520;
+            --color-text: #4a3728;
+            --color-text-light: #8b6f47;
+            --color-bg: #faf6f0;
+            --color-bg-light: #ede6da;
+            --color-bg-accent: #f5ead1;
+            --color-border: #ddd4c4;
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--color-text);
+            background: var(--color-bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ===== SKIP LINK: ПЛАВНОЕ ВЫПЛЫВАНИЕ ===== */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-primary);
+            color: white;
+            padding: var(--space-sm);
+            text-decoration: none;
+            z-index: 100;
+            transition: top 0.3s ease; /* ПЛАВНЫЙ ПЕРЕХОД */
+        }
+
+        .skip-link:hover,
+        .skip-link:focus {
+            top: 0; /* ВЫПЛЫВАЕТ ПЛАВНО */
+        }
+
+        body {
+            padding: max(0px, env(safe-area-inset-top)) 
+                     max(0px, env(safe-area-inset-right)) 
+                     max(0px, env(safe-area-inset-bottom)) 
+                     max(0px, env(safe-area-inset-left));
+        }
+
+        header {
+            background: var(--color-bg);
+            border-bottom: 2px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: var(--space-md);
+            padding-top: max(var(--space-sm), env(safe-area-inset-top));
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: clamp(0.5rem, 2vw, 2rem);
+        }
+
+        .logo {
+            font-size: clamp(1.25rem, 4vw, 1.5rem);
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: clamp(0.5rem, 2vw, 1.5rem);
+            margin: 0;
+            padding: 0;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+        }
+
+        .nav-links a {
+            color: var(--color-text);
+            text-decoration: none;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .nav-links a:hover {
+            background: var(--color-bg-accent);
+            color: var(--color-primary);
+        }
+
+        .nav-links a[aria-current="page"] {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 5vw, 2rem);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            padding: clamp(2rem, 8vw, 4rem) clamp(1rem, 5vw, 2rem);
+            text-align: center;
+            margin-bottom: clamp(1.5rem, 5vw, 3rem);
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: clamp(1.5rem, 6vw, 2.5rem);
+        }
+
+        .page-header p {
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            margin: var(--space-sm) 0 0 0;
+        }
+
+        .catalog-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: clamp(1rem, 3vw, 2rem);
+            padding: clamp(1.5rem, 5vw, 2rem) 0;
+            margin-bottom: clamp(2rem, 8vw, 4rem);
+        }
+
+        .filters-sidebar {
+            background: white;
+            padding: clamp(1rem, 2vw, 1.5rem);
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .filter-group h3 {
+            margin: 0 0 var(--space-md) 0;
+            font-size: 1rem;
+            color: var(--color-primary);
+            border-bottom: 2px solid var(--color-border);
+            padding-bottom: var(--space-sm);
+        }
+
+        .filter-option {
+            margin-bottom: var(--space-sm);
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-option input[type="checkbox"] {
+            margin-right: var(--space-sm);
+            cursor: pointer;
+        }
+
+        .filter-option label {
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--color-text);
+        }
+
+        .products-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+
+        .products-count {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        .sort-select {
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--color-text);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            background: var(--color-bg-light);
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            padding: clamp(0.75rem, 1.5vw, 1rem);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            margin: 0 0 var(--space-xs) 0;
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            color: var(--color-text);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .product-author {
+            margin: 0 0 var(--space-sm) 0;
+            color: var(--color-text-light);
+            font-size: 0.85rem;
+        }
+
+        .product-rating {
+            color: var(--color-primary);
+            font-size: 0.85rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        .product-price {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+            margin-top: auto;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: var(--space-sm);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .add-to-cart-btn:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .load-more {
+            display: block;
+            margin: clamp(1.5rem, 3vw, 2rem) auto;
+            padding: var(--space-md) var(--space-xl);
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+        }
+
+        .load-more:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: var(--color-primary);
+            color: white;
+            padding: clamp(2rem, 8vw, 4rem) clamp(1rem, 5vw, 2rem);
+            margin-top: clamp(2rem, 8vw, 4rem);
+        }
+
+        footer .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(1rem, 3vw, 2rem);
+        }
+
+        footer h4 {
+            margin-top: 0;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: var(--space-xs);
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .catalog-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-sidebar {
+                position: static;
+                top: auto;
+                margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .products-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#main" class="skip-link">Перейти к каталогу</a>
+
+    <header role="banner">
+        <nav aria-label="Главная навигация">
+            <a href="index.html" class="logo">BookStore</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html" aria-current="page">Каталог</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main">
+        <div class="page-header">
+            <h1>Каталог книг</h1>
+            <p>Более 50 000 книг на любой вкус и возраст</p>
+        </div>
+
+        <div class="container">
+            <div class="catalog-layout">
+                <div class="products-section">
+                    <div class="products-header">
+                        <div class="products-count">Показано 12 из 12 книг</div>
+                        </select>
+                    </div>
+
+                    <div class="products-grid">
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book1.jpg" alt="Обложка 'Война и мир'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">Война и мир</h3>
+                                <p class="product-author">Лев Толстой</p>
+                                <p class="product-rating">Рейтинг: 4.8</p>
+                                <p class="product-price">890 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('Война и мир', 'Лев Толстой', 890)">Добавить в корзину</button>
+                            </div>
+                        </article>
+
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book2.jpg" alt="Обложка 'Преступление и наказание'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">Преступление и наказание</h3>
+                                <p class="product-author">Федор Достоевский</p>
+                                <p class="product-rating">Рейтинг: 4.7</p>
+                                <p class="product-price">750 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('Преступление и наказание', 'Федор Достоевский', 750)">Добавить в корзину</button>
+                            </div>
+                        </article>
+
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book3.jpg" alt="Обложка 'Мастер и Маргарита'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">Мастер и Маргарита</h3>
+                                <p class="product-author">Михаил Булгаков</p>
+                                <p class="product-rating">Рейтинг: 4.9</p>
+                                <p class="product-price">820 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('Мастер и Маргарита', 'Михаил Булгаков', 820)">Добавить в корзину</button>
+                            </div>
+                        </article>
+
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book4.jpg" alt="Обложка 'Пекло'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">Дом, в котором…</h3>
+                                <p class="product-author">Мариам Петросян</p>
+                                <p class="product-rating">Рейтинг: 4.6</p>
+                                <p class="product-price">650 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('Пекло', 'Дмитрий Глуховский', 650)">Добавить в корзину</button>
+                            </div>
+                        </article>
+
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book5.jpg" alt="Обложка 'Атомные привычки'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">Атомные привычки</h3>
+                                <p class="product-author">Джеймс Клиэр</p>
+                                <p class="product-rating">Рейтинг: 4.8</p>
+                                <p class="product-price">590 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('Атомные привычки', 'Джеймс Клиэр', 590)">Добавить в корзину</button>
+                            </div>
+                        </article>
+
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book6.jpg" alt="Обложка 'Хоббит'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">Хоббит</h3>
+                                <p class="product-author">Дж. Р. Р. Толкиен</p>
+                                <p class="product-rating">Рейтинг: 4.9</p>
+                                <p class="product-price">1200 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('Хоббит', 'Дж. Р. Р. Толкин', 1200)">Добавить в корзину</button>
+                            </div>
+                        </article>
+
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book7.jpg" alt="Обложка '1984'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">1984</h3>
+                                <p class="product-author">Джордж Оруэлл</p>
+                                <p class="product-rating">Рейтинг: 4.7</p>
+                                <p class="product-price">550 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('1984', 'Джордж Оруэлл', 550)">Добавить в корзину</button>
+                            </div>
+                        </article>
+
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book8.jpg" alt="Обложка 'О дивный новый мир'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">О дивный новый мир</h3>
+                                <p class="product-author">Олдос Хаксли</p>
+                                <p class="product-rating">Рейтинг: 4.6</p>
+                                <p class="product-price">640 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('О дивный новый мир', 'Олдос Хаксли', 640)">Добавить в корзину</button>
+                            </div>
+                        </article>
+
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book9.jpg" alt="Обложка 'Граф Монте-Кристо'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">Граф Монте-Кристо</h3>
+                                <p class="product-author">Александр Дюма</p>
+                                <p class="product-rating">Рейтинг: 4.8</p>
+                                <p class="product-price">920 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('Граф Монте-Кристо', 'Александр Дюма', 920)">Добавить в корзину</button>
+                            </div>
+                        </article>
+
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book10.jpg" alt="Обложка 'Три мушкетера'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">Три мушкетера</h3>
+                                <p class="product-author">Александр Дюма</p>
+                                <p class="product-rating">Рейтинг: 4.7</p>
+                                <p class="product-price">850 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('Три мушкетера', 'Александр Дюма', 850)">Добавить в корзину</button>
+                            </div>
+                        </article>
+
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book11.jpg" alt="Обложка 'Джейн Эйр'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">Джейн Эйр</h3>
+                                <p class="product-author">Шарлотта Бронте</p>
+                                <p class="product-rating">Рейтинг: 4.6</p>
+                                <p class="product-price">720 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('Джейн Эйр', 'Шарлотта Бронте', 720)">Добавить в корзину</button>
+                            </div>
+                        </article>
+
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="images/book12.jpg" alt="Обложка 'Гордость и предубеждение'">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">Гордость и предубеждение</h3>
+                                <p class="product-author">Джейн Остин</p>
+                                <p class="product-rating">Рейтинг: 4.8</p>
+                                <p class="product-price">680 ₽</p>
+                                <button class="add-to-cart-btn" onclick="addToCart('Гордость и предубеждение', 'Джейн Остин', 680)">Добавить в корзину</button>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="container">
+            <div>
+                <h4>О BookStore</h4>
+                <p>Крупнейший онлайн-магазин книг. Качество, удобство, доступные цены.</p>
+            </div>
+            <div>
+                <h4>Категории</h4>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li><a href="#">Художественная литература</a></li>
+                    <li><a href="#">Наука и образование</a></li>
+                    <li><a href="#">Бизнес</a></li>
+                    <li><a href="#">Саморазвитие</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Контакты</h4>
+                <p>Email: <a href="mailto:info@bookstore.ru">info@bookstore.ru</a></p>
+                <p>Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Функция для добавления товара в корзину (вызывается из catalog.html)
+        function addToCart(title, author, price) {
+            // Получаем текущую корзину из localStorage
+            const cartData = localStorage.getItem('bookstoreCart');
+            const cart = cartData ? JSON.parse(cartData) : [];
+
+            // Проверяем, есть ли уже такой товар
+            const existingItem = cart.find(item => item.title === title);
+
+            if (existingItem) {
+                // Если есть, увеличиваем количество
+                existingItem.quantity++;
+            } else {
+                // Если нет, добавляем новый товар
+                cart.push({
+                    title: title,
+                    author: author,
+                    price: price,
+                    quantity: 1
+                });
+            }
+
+            // Сохраняем обновленную корзину
+            localStorage.setItem('bookstoreCart', JSON.stringify(cart));
+
+            // Показываем уведомление
+            alert('✅ ' + title + ' добавлена в корзину!');
+        }
+    </script>
+</body>
+</html>

@@ -1,441 +1,581 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!-- Основные мета-теги для SEO и отзывчивости -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Контакты - Мир Книг</title>
-
-    <!-- Подключение внешних CSS библиотек -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Пользовательские стили для контактной страницы -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Контакты BookStore - свяжитесь с нами по телефону, email или визитом в офис.">
+    <meta name="theme-color" content="#b8860b">
+    <title>Контакты - BookStore</title>
     <style>
-        /* Определение цветовых переменных */
+        /* ===== ЕДИНАЯ ЦВЕТОВАЯ ПАЛИТРА ===== */
         :root {
-            --primary-color: #D4A574;        /* Песочный цвет */
-            --secondary-color: #B8956A;      /* Коричневый цвет */
-            --accent-color: #E67E22;         /* Оранжевый цвет */
-            --background-color: #FAF6F0;     /* Кремовый фон */
-            --text-color: #4A3728;           /* Темно-коричневый текст */
+            --color-primary: #b8860b;
+            --color-primary-dark: #8b6508;
+            --color-primary-light: #daa520;
+            --color-text: #4a3728;
+            --color-text-light: #8b6f47;
+            --color-bg: #faf6f0;
+            --color-bg-light: #ede6da;
+            --color-bg-accent: #f5ead1;
+            --color-border: #ddd4c4;
+            --color-success: #7cb342;
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
         }
 
-        /* Основные стили страницы */
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
         body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            font-family: 'Georgia', serif;   /* Шрифт с засечками */
-            padding-top: 76px;               /* Отступ для фиксированной навигации */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--color-text);
+            background: var(--color-bg);
+            margin: 0;
+            padding: 0;
         }
 
-        /* Стили навигационной панели */
-        .navbar {
-            background-color: var(--primary-color);
-        }
-
-        .navbar-brand, .nav-link {
-            color: var(--text-color) !important;
-        }
-
-        /* Базовые стили карточек */
-        .card {
-            border: none;                     /* Убираем стандартную границу */
-            border-radius: 15px;             /* Закругляем углы */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);  /* Добавляем тень */
-        }
-
-        /* Стили основных кнопок */
-        .btn-primary {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
-        }
-
-        /* Стили кнопки входа в навигации */
-        .btn-login {
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
-            color: var(--background-color);
-        }
-
-        .btn-login:hover {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
+        /* ===== SKIP LINK ===== */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-primary);
             color: white;
+            padding: var(--space-sm);
+            text-decoration: none;
+            z-index: 100;
+            transition: top 0.3s ease;
         }
 
-        /* Стили для карточек контактных методов */
+        .skip-link:hover,
+        .skip-link:focus {
+            top: 0;
+        }
+
+        body {
+            padding: max(0px, env(safe-area-inset-top)) 
+                     max(0px, env(safe-area-inset-right)) 
+                     max(0px, env(safe-area-inset-bottom)) 
+                     max(0px, env(safe-area-inset-left));
+        }
+
+        header {
+            background: var(--color-bg);
+            border-bottom: 2px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: var(--space-md) var(--space-md);
+            padding-top: max(var(--space-sm), env(safe-area-inset-top));
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: clamp(0.5rem, 2vw, 2rem);
+        }
+
+        .logo {
+            font-size: clamp(1.25rem, 4vw, 1.5rem);
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: clamp(0.5rem, 2vw, 1.5rem);
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--color-text);
+            text-decoration: none;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+        }
+
+        .nav-links a:hover {
+            background: var(--color-bg-accent);
+            color: var(--color-primary);
+        }
+
+        .nav-links a[aria-current="page"] {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 5vw, 2rem);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            padding: clamp(2rem, 8vw, 4rem) clamp(1rem, 5vw, 2rem);
+            text-align: center;
+            margin-bottom: clamp(1.5rem, 5vw, 3rem);
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: clamp(1.5rem, 6vw, 2.5rem);
+        }
+
+        .page-header p {
+            margin: var(--space-md) 0 0;
+            font-size: clamp(0.95rem, 2vw, 1.05rem);
+            opacity: 0.95;
+        }
+
+        /* ===== КОНТАКТНЫЕ КАРТОЧКИ ===== */
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(1rem, 3vw, 2rem);
+            margin-bottom: clamp(2rem, 5vw, 3rem);
+        }
+
         .contact-card {
-            background-color: white;
-            transition: transform 0.3s ease; /* Плавная анимация при наведении */
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: clamp(1.5rem, 2vw, 2rem);
+            border-left: 4px solid var(--color-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
 
         .contact-card:hover {
-            transform: translateY(-5px);     /* Эффект подъема при наведении */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
         }
 
-        /* Стили для иконок контактов */
-        .contact-icon {
-            color: var(--accent-color);
-            font-size: 2rem;
+        .contact-card h3 {
+            margin: 0 0 var(--space-md) 0;
+            color: var(--color-primary);
+            font-size: clamp(1rem, 2vw, 1.25rem);
         }
 
-        /* Стили для полей ввода в состоянии фокуса */
-        .form-control:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
+        .contact-card p {
+            margin: 0 0 var(--space-sm) 0;
+            color: var(--color-text-light);
+            font-size: 0.95rem;
         }
 
-        /* Стили модальных окон */
-        .modal-content {
-            border-radius: 15px;
+        .contact-card p:last-child {
+            margin-bottom: 0;
         }
 
-        .modal-header {
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            border-radius: 15px 15px 0 0;
+        .contact-card a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .contact-card a:hover {
+            color: var(--color-primary-dark);
+            text-decoration: underline;
+        }
+
+        /* ===== ИНФОРМАЦИОННАЯ КАРТОЧКА ===== */
+        .info-card {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: clamp(1.5rem, 2vw, 2rem);
+            margin-bottom: clamp(2rem, 5vw, 3rem);
+        }
+
+        .info-card h3 {
+            margin: 0 0 var(--space-md) 0;
+            color: var(--color-primary);
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+        }
+
+        .info-card p {
+            margin: 0 0 var(--space-sm) 0;
+            color: var(--color-text);
+            font-size: 0.95rem;
+        }
+
+        .info-card strong {
+            color: var(--color-primary);
+        }
+
+        /* ===== ФОРМА ОБРАТНОЙ СВЯЗИ ===== */
+        .form-section {
+            background: var(--color-bg-accent);
+            padding: clamp(2rem, 8vw, 4rem) clamp(1rem, 5vw, 2rem);
+            border-radius: 8px;
+            margin-bottom: clamp(2rem, 8vw, 4rem);
+        }
+
+        .form-section h2 {
+            margin: 0 0 var(--space-md) 0;
+            font-size: clamp(1.3rem, 4vw, 2rem);
+            color: var(--color-primary);
+        }
+
+        .form-section > p {
+            margin: 0 0 var(--space-lg) 0;
+            color: var(--color-text);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(1rem, 2vw, 1.5rem);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: var(--space-xs);
+            font-weight: 600;
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+            color: var(--color-text);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            padding: clamp(0.5rem, 1vw, 0.75rem);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
+            color: var(--color-text);
+            background: white;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-button {
+            background: var(--color-primary);
+            color: white;
+            padding: clamp(0.5rem, 1vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: var(--space-md);
+        }
+
+        .submit-button:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: #d9534f;
+            font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+            margin-top: var(--space-xs);
+            display: none;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .success-message {
+            background: var(--color-success);
+            color: white;
+            padding: clamp(1rem, 2vw, 1.5rem);
+            border-radius: 6px;
+            display: none;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        footer {
+            background: var(--color-primary);
+            color: white;
+            padding: clamp(2rem, 8vw, 4rem) clamp(1rem, 5vw, 2rem);
+            margin-top: clamp(2rem, 8vw, 4rem);
+        }
+
+        footer .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(1rem, 3vw, 2rem);
+        }
+
+        footer h4 {
+            margin-top: 0;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: var(--space-sm);
+            }
+
+            .contacts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
-    <!-- Навигационная панель (идентична для всех страниц) -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <a href="#main" class="skip-link">Перейти к контактам</a>
+
+    <header role="banner">
+        <nav aria-label="Главная навигация">
+            <a href="index.html" class="logo">BookStore</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+                <li><a href="contacts.html" aria-current="page">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main">
+        <div class="page-header">
+            <h1>Контакты</h1>
+            <p>Свяжитесь с нами - мы готовы помочь вам 24/7</p>
+        </div>
+
         <div class="container">
-            <!-- Логотип и название -->
-            <a class="navbar-brand fw-bold" href="index.html"><i class="fas fa-book-open me-2"></i>Мир Книг</a>
+            <!-- ===== КОНТАКТНАЯ ИНФОРМАЦИЯ ===== -->
+            <div class="contacts-grid">
+                <article class="contact-card">
+                    <h3>Телефон</h3>
+                    <p>Звоните в рабочие дни с 9:00 до 18:00</p>
+                    <p><a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+                </article>
 
-            <!-- Кнопка для мобильного меню -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <article class="contact-card">
+                    <h3>Email</h3>
+                    <p>Ответим на ваше письмо в течение 2 часов</p>
+                    <p><a href="mailto:info@bookstore.ru">info@bookstore.ru</a></p>
+                </article>
 
-            <!-- Основное меню -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Главная</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="books.html">Каталог книг</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="diary.html">Читательский дневник</a>
-                    </li>
-                    <!-- Активная страница - Контакты -->
-                    <li class="nav-item">
-                        <a class="nav-link active" href="contacts.html">Контакты</a>
-                    </li>
+                <article class="contact-card">
+                    <h3>Офис</h3>
+                    <p>Приходите к нам для личной консультации</p>
+                    <p>Москва, ул. Книжная, д. 42, офис 501</p>
+                </article>
+            </div>
 
-                    <!-- Кнопка входа в систему -->
-                    <li class="nav-item ms-2">
-                        <button class="btn btn-login btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
-                            <i class="fas fa-user me-1"></i>Войти
-                        </button>
-                    </li>
+            <!-- ===== ИНФОРМАЦИЯ О ДОСТАВКЕ И ВРЕМЕНИ РАБОТЫ ===== -->
+            <article class="info-card">
+                <h3>Информация о доставке</h3>
+
+                <p><strong>Доставка по Москве:</strong> 1-2 рабочих дня</p>
+                <p><strong>По России (почта):</strong> 5-7 рабочих дней</p>
+                <p><strong>Экспресс доставка:</strong> за 4 часа в пределах МКАДа</p>
+
+                <p style="margin-top: var(--space-lg);"><strong>Время работы:</strong></p>
+                <p>Пн-Пт: 9:00 - 18:00</p>
+                <p>Сб: 10:00 - 17:00</p>
+                <p>Вс: Выходной</p>
+            </article>
+
+            <!-- ===== ФОРМА ОБРАТНОЙ СВЯЗИ ===== -->
+            <section class="form-section">
+                <h2>Напишите нам</h2>
+                <p>Заполните форму ниже и мы свяжемся с вами в ближайшее время</p>
+
+                <div class="success-message" id="successMessage" role="alert">
+                    Ваше сообщение отправлено успешно! Мы свяжемся с вами в ближайшее время.
+                </div>
+
+                <form id="contactForm" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Ваше имя <span aria-label="обязательное поле">*</span></label>
+                            <input type="text" id="name" name="name" required aria-required="true" aria-describedby="nameError">
+                            <span class="error-message" id="nameError">Пожалуйста, введите ваше имя</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email <span aria-label="обязательное поле">*</span></label>
+                            <input type="email" id="email" name="email" required aria-required="true" aria-describedby="emailError">
+                            <span class="error-message" id="emailError">Пожалуйста, введите корректный email</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Телефон</label>
+                            <input type="tel" id="phone" name="phone" aria-describedby="phoneHelp">
+                            <small id="phoneHelp" style="color: var(--color-text-light); margin-top: var(--space-xs);">Необязательное поле</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Тема <span aria-label="обязательное поле">*</span></label>
+                            <input type="text" id="subject" name="subject" required aria-required="true" aria-describedby="subjectError">
+                            <span class="error-message" id="subjectError">Пожалуйста, укажите тему сообщения</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Сообщение <span aria-label="обязательное поле">*</span></label>
+                        <textarea id="message" name="message" required aria-required="true" aria-describedby="messageError"></textarea>
+                        <span class="error-message" id="messageError">Пожалуйста, напишите сообщение (минимум 10 символов)</span>
+                    </div>
+
+                    <button type="submit" class="submit-button">Отправить сообщение</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="container">
+            <div>
+                <h4>О BookStore</h4>
+                <p>Ведущий онлайн-магазин книг России с качественным сервисом</p>
+            </div>
+            <div>
+                <h4>Быстрые ссылки</h4>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <li><a href="cart.html">Корзина</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
                 </ul>
             </div>
-        </div>
-    </nav>
-
-    <!-- Модальное окно входа -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Заголовок модального окна -->
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Вход в аккаунт</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
-
-                <!-- Тело модального окна с формой -->
-                <div class="modal-body">
-                    <form id="loginForm">
-                        <!-- Поле для email -->
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="loginEmail" required>
-                        </div>
-
-                        <!-- Поле для пароля -->
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Пароль</label>
-                            <input type="password" class="form-control" id="loginPassword" required>
-                        </div>
-
-                        <!-- Чекбокс запоминания -->
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe">
-                                Запомнить меня
-                            </label>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Футер с кнопками -->
-                <div class="modal-footer">
-                    <div class="d-flex justify-content-between w-100">
-                        <!-- Переход к регистрации -->
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
-                            Зарегистрироваться
-                        </button>
-                        <button type="button" class="btn btn-primary">Войти</button>
-                    </div>
-                </div>
+            <div>
+                <h4>Контакты</h4>
+                <p>Email: <a href="mailto:info@bookstore.ru">info@bookstore.ru</a></p>
+                <p>Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+                <p>Адрес: Москва, ул. Книжная, д. 42</p>
             </div>
         </div>
-    </div>
+    </footer>
 
-    <!-- Модальное окно регистрации -->
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Заголовок регистрации -->
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerModalLabel">Регистрация</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
+    <script>
+        const form = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
 
-                <!-- Форма регистрации -->
-                <div class="modal-body">
-                    <form id="registerForm">
-                        <!-- Поле имени -->
-                        <div class="mb-3">
-                            <label for="registerName" class="form-label">Имя</label>
-                            <input type="text" class="form-control" id="registerName" required>
-                        </div>
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-                        <!-- Поле email -->
-                        <div class="mb-3">
-                            <label for="registerEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="registerEmail" required>
-                        </div>
+            let isValid = true;
 
-                        <!-- Поле пароля -->
-                        <div class="mb-3">
-                            <label for="registerPassword" class="form-label">Пароль</label>
-                            <input type="password" class="form-control" id="registerPassword" required>
-                        </div>
+            const nameInput = document.getElementById('name');
+            const nameGroup = nameInput.parentElement;
 
-                        <!-- Подтверждение пароля -->
-                        <div class="mb-3">
-                            <label for="registerPasswordConfirm" class="form-label">Подтвердите пароль</label>
-                            <input type="password" class="form-control" id="registerPasswordConfirm" required>
-                        </div>
+            if (nameInput.value.trim() === '') {
+                isValid = false;
+                nameGroup.classList.add('error');
+            } else {
+                nameGroup.classList.remove('error');
+            }
 
-                        <!-- Согласие с условиями -->
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="agreeTerms" required>
-                            <label class="form-check-label" for="agreeTerms">
-                                Я согласен с условиями использования
-                            </label>
-                        </div>
-                    </form>
-                </div>
+            const emailInput = document.getElementById('email');
+            const emailGroup = emailInput.parentElement;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                <!-- Футер с кнопками -->
-                <div class="modal-footer">
-                    <div class="d-flex justify-content-between w-100">
-                        <!-- Переход к входу -->
-                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#loginModal">
-                            Уже есть аккаунт?
-                        </button>
-                        <button type="button" class="btn btn-primary">Зарегистрироваться</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            if (!emailRegex.test(emailInput.value)) {
+                isValid = false;
+                emailGroup.classList.add('error');
+            } else {
+                emailGroup.classList.remove('error');
+            }
 
-    <!-- Заголовочная секция страницы контактов -->
-    <section class="py-5" style="background-color: white;">
-        <div class="container text-center">
-            <h1 class="display-5 fw-bold mb-4">Свяжитесь с нами</h1>
-            <p class="lead">Мы всегда готовы помочь вам найти идеальную книгу и ответить на ваши вопросы</p>
-        </div>
-    </section>
+            const subjectInput = document.getElementById('subject');
+            const subjectGroup = subjectInput.parentElement;
 
-    <!-- Секция способов связи -->
-    <section class="py-5">
-        <div class="container">
-            <div class="row g-4 mb-5">
-                <!-- Карточка телефонной связи -->
-                <div class="col-md-4">
-                    <div class="contact-card card p-4 text-center">
-                        <i class="fas fa-phone contact-icon mb-3"></i>
-                        <h5>Позвоните нам</h5>
-                        <p class="text-muted">Звоните в рабочие дни с 9:00 до 20:00</p>
-                        <!-- Ссылка для набора номера -->
-                        <a href="tel:+74951234567" class="btn btn-outline-primary">+7 (495) 123-45-67</a>
-                    </div>
-                </div>
+            if (subjectInput.value.trim() === '') {
+                isValid = false;
+                subjectGroup.classList.add('error');
+            } else {
+                subjectGroup.classList.remove('error');
+            }
 
-                <!-- Карточка email связи -->
-                <div class="col-md-4">
-                    <div class="contact-card card p-4 text-center">
-                        <i class="fas fa-envelope contact-icon mb-3"></i>
-                        <h5>Напишите нам</h5>
-                        <p class="text-muted">Отправьте email, мы ответим в течение 2 часов</p>
-                        <!-- Ссылка для отправки email -->
-                        <a href="mailto:info@mirknig.ru" class="btn btn-outline-primary">info@mirknig.ru</a>
-                    </div>
-                </div>
+            const messageInput = document.getElementById('message');
+            const messageGroup = messageInput.parentElement;
 
-                <!-- Карточка физического адреса -->
-                <div class="col-md-4">
-                    <div class="contact-card card p-4 text-center">
-                        <i class="fas fa-map-marker-alt contact-icon mb-3"></i>
-                        <h5>Приезжайте к нам</h5>
-                        <p class="text-muted">Посетите наш магазин для личной консультации</p>
-                        <button class="btn btn-outline-primary">г. Москва, ул. Тверская, 15</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            if (messageInput.value.trim().length < 10) {
+                isValid = false;
+                messageGroup.classList.add('error');
+            } else {
+                messageGroup.classList.remove('error');
+            }
 
-    <!-- Секция с формой обратной связи -->
-    <section class="py-5" style="background-color: white;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <!-- Карточка с формой -->
-                    <div class="card p-5">
-                        <h3 class="text-center mb-4">Форма обратной связи</h3>
-                        <p class="text-center text-muted mb-4">Заполните форму ниже, и мы свяжемся с вами в ближайшее время для помощи в выборе книг</p>
+            if (isValid) {
+                successMessage.classList.add('show');
+                form.reset();
 
-                        <!-- Контактная форма -->
-                        <form>
-                            <div class="row g-3">
-                                <!-- Поле имени -->
-                                <div class="col-md-6">
-                                    <label for="name" class="form-label">Ваше имя *</label>
-                                    <input type="text" class="form-control" id="name" required>
-                                </div>
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
 
-                                <!-- Поле телефона -->
-                                <div class="col-md-6">
-                                    <label for="phone" class="form-label">Телефон *</label>
-                                    <input type="tel" class="form-control" id="phone" required>
-                                </div>
+                successMessage.focus();
+            }
+        });
 
-                                <!-- Поле email -->
-                                <div class="col-12">
-                                    <label for="email" class="form-label">Email *</label>
-                                    <input type="email" class="form-control" id="email" required>
-                                </div>
-
-                                <!-- Выпадающий список интересов -->
-                                <div class="col-12">
-                                    <label for="interest" class="form-label">Что вас интересует?</label>
-                                    <select class="form-control" id="interest">
-                                        <option>Художественная литература</option>
-                                        <option>Детективы и триллеры</option>
-                                        <option>Фантастика</option>
-                                        <option>Психология и саморазвитие</option>
-                                        <option>Биографии</option>
-                                        <option>Бизнес-литература</option>
-                                        <option>Детская литература</option>
-                                        <option>Учебная литература</option>
-                                        <option>Другое</option>
-                                    </select>
-                                </div>
-
-                                <!-- Поле сообщения -->
-                                <div class="col-12">
-                                    <label for="message" class="form-label">Сообщение</label>
-                                    <textarea class="form-control" id="message" rows="4" placeholder="Расскажите, какие книги вы ищете или какие вопросы у вас есть..."></textarea>
-                                </div>
-
-                                <!-- Чекбокс согласия на обработку данных -->
-                                <div class="col-12">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="consent" required>
-                                        <label class="form-check-label" for="consent">
-                                            Я согласен(а) на обработку персональных данных *
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <!-- Кнопка отправки -->
-                                <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary btn-lg px-5">Отправить сообщение</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Секция с информацией о местоположении и часах работы -->
-    <section class="py-5">
-        <div class="container">
-            <div class="row">
-                <!-- Колонка с информацией о местоположении -->
-                <div class="col-md-6">
-                    <div class="card p-4">
-                        <h4 class="mb-3"><i class="fas fa-map-marker-alt me-2"></i>Как нас найти</h4>
-                        <p><strong>Адрес:</strong> г. Москва, ул. Тверская, 15</p>
-
-                        <!-- Информация о станциях метро -->
-                        <h6>Ближайшие станции метро:</h6>
-                        <ul class="list-unstyled">
-                            <li><i class="fas fa-subway me-2"></i>Станция "Охотный ряд" - 2 минуты пешком</li>
-                            <li><i class="fas fa-subway me-2"></i>Станция "Театральная" - 5 минут пешком</li>
-                            <li><i class="fas fa-subway me-2"></i>Станция "Площадь Революции" - 7 минут пешком</li>
-                        </ul>
-
-                        <!-- Информация о парковке -->
-                        <p><i class="fas fa-car me-2"></i>Платная парковка рядом с магазином</p>
-                    </div>
-                </div>
-
-                <!-- Колонка с информацией о времени работы -->
-                <div class="col-md-6">
-                    <div class="card p-4">
-                        <h4 class="mb-3"><i class="fas fa-clock me-2"></i>Время работы</h4>
-
-                        <div class="row">
-                            <!-- Часы работы магазина -->
-                            <div class="col-6">
-                                <h6>Книжный магазин:</h6>
-                                <ul class="list-unstyled">
-                                    <li>Пн-Пт: 9:00 - 20:00</li>
-                                    <li>Сб-Вс: 10:00 - 18:00</li>
-                                </ul>
-                            </div>
-
-                            <!-- Часы работы онлайн поддержки -->
-                            <div class="col-6">
-                                <h6>Онлайн поддержка:</h6>
-                                <ul class="list-unstyled">
-                                    <li>Пн-Пт: 9:00 - 18:00</li>
-                                    <li>Сб: 10:00 - 16:00</li>
-                                    <li>Вс: выходной</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Информация о доставке -->
-                        <div class="alert" style="background-color: var(--primary-color); border: none; color: var(--text-color);">
-                            <i class="fas fa-info-circle me-2"></i>
-                            <strong>Доставка книг по Москве:</strong> ежедневно с 10:00 до 22:00
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Подключение JavaScript библиотеки Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        form.querySelectorAll('input, textarea').forEach(field => {
+            field.addEventListener('input', function() {
+                const group = this.parentElement;
+                if (group.classList.contains('error')) {
+                    group.classList.remove('error');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
