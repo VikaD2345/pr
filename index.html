@@ -455,14 +455,14 @@
 
             <article class="book-card">
                 <div class="book-image">
-                    <img src="images/book4.jpg" alt="Обложка книги 'Пекло'">
+                    <img src="images/book4.jpg" alt="Обложка книги 'Дом, в котором…'">
                 </div>
                 <div class="book-info">
                     <h3 class="book-title">Дом, в котором…</h3>
                     <p class="book-author">Мариам Петросян</p>
                     <p class="book-rating">Рейтинг: 4.6 (389 отзывов)</p>
                     <p class="book-price">650 ₽</p>
-                    <button class="add-to-cart" onclick="addToCart('Пекло', 'Дмитрий Глуховский', 650)">Добавить в корзину</button>
+                    <button class="add-to-cart" onclick="addToCart('Дом, в котором…', 'Мариам Петросян', 650)">Добавить в корзину</button>
                 </div>
             </article>
 
@@ -571,7 +571,7 @@
             localStorage.setItem('bookstoreCart', JSON.stringify(cart));
 
             // Показываем уведомление
-            alert('✅ ' + title + ' добавлена в корзину!');
+            alert(title + ' добавлена в корзину!');
         }
     </script>
 </body>
